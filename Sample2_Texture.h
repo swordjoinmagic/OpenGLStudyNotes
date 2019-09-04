@@ -5,6 +5,8 @@
 #include "main.h"
 #include <memory>
 #include "Shader.h"
+#include "Image.h"
+using namespace SJM;
 
 class Sample2 {
 private:
@@ -17,7 +19,8 @@ public:
 	void onDestory();
 private:
 	unsigned int VAO;
-	unsigned int texture;
+	std::shared_ptr<Image> texture1;
+	std::shared_ptr<Image> texture2;
 };
 
 #endif // !SAMPLE2

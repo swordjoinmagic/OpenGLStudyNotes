@@ -1,5 +1,7 @@
 #include "Shader.h"
 
+using namespace SJM;
+
 // 根据着色器代码的路径读取源码,返回const char*类型
 std::string Shader::getSourceCode(const char* codePath) {
 	std::string sourceCode;
@@ -102,4 +104,15 @@ void Shader::setInt(const std::string &name, int value) const {
 }
 void Shader::setFloat(const std::string &name, float value) const {
 	glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
+}
+void Shader::setTexture2D(const std::string &name,const Image image,int textureUnit) {
+	glActiveTexture(GL_TEXTURE0+textureUnit);
+	glBindTexture(GL_TEXTURE_2D,image.textureID);
+	// 设置uniform
+	setInt(name,textureUnit);
+}
+
+void Shader::setMatrix4x4(const std::string &name, const float* value) {
+	unsigned int location = glGetUniformLocation(ID,name.c_str());
+	glUniformMatrix4fv(location,1,GL_FALSE,value);
 }

@@ -5,9 +5,10 @@ layout(location = 2) in vec2 texcoord;
 
 out vec3 ourColor;
 out vec2 uv;
+uniform mat4 mvp;
 
 void main(){
-    gl_Position = vec4(aPos,1.0);
+    gl_Position = mvp * vec4(aPos,1.0);
     ourColor = aColor;
     uv = texcoord;
 }

@@ -1,6 +1,12 @@
 #include "main.h"
 #include "Sample2_Texture.h"
 #include "stb_image.h"
+#include "Image.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+using namespace SJM;
 
 void Sample2::initVertex() {
 	// 顶点数据(包括位置/颜色/uv属性)
@@ -49,45 +55,8 @@ void Sample2::initVertex() {
 }
 
 void Sample2::createTexture() {
-	// 生成纹理对象
-	glGenTextures(1, &texture);
-	// 绑定纹理,后续所有纹理指令都可以配置当前绑定的纹理
-	glBindTexture(GL_TEXTURE_2D, texture);
-
-	// 设置当前绑定纹理对象的采样/过滤模式
-
-	// 设置采样模式为repeat
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-	// 设置纹理过滤模式为线性过滤模式
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	// 读取纹理
-	int width, height, nrChannels;
-	// 返回该图像的宽度/高度/颜色通道个数
-	unsigned char *data = stbi_load("Image/container.jpg", &width, &height, &nrChannels, 0);
-
-	if (data) {
-		// 使用前面载入的图片数据生成一个纹理
-		glTexImage2D(
-			GL_TEXTURE_2D,	// 目标纹理缓冲类型
-			0,				// 多级减员纹理的级别
-			GL_RGB,			// 告诉OpenGL把纹理存储为何种格式
-			width, height,	// 纹理的宽度和高度
-			0,				// 应该总是被设为0
-			GL_RGB, GL_UNSIGNED_BYTE, // 定义了原图的格式和数据类型
-			data			// 图像数据
-		);
-		// 生成多级渐远纹理
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else {
-		std::cout << "无法读取纹理" << std::endl;
-	}
-	// 生成纹理对象后,将读取进来的图像内存释放
-	stbi_image_free(data);
+	texture1 = std::make_shared<Image>("Image/container.jpg");
+	texture2 = std::make_shared<Image>("Image/29126173.bmp");
 }
 
 void Sample2::init() {
@@ -96,13 +65,34 @@ void Sample2::init() {
 
 	initVertex();
 	createTexture();
+
+	glUseProgram(shader->ID);
+	shader->setTexture2D("texture1", *texture1, 0);
+	shader->setTexture2D("texture2", *texture2, 1);
 }
 
 void Sample2::render() {
 
 	glUseProgram(shader->ID);
 
-	glBindTexture(GL_TEXTURE_2D,texture);
+	// 设置MVP矩阵
+
+	// 世界坐标/旋转/缩放
+	glm::vec3 position(0.5f,0,0);
+	glm::vec3 scale(1,1,1);
+	scale *= 0.5f;
+	glm::mat4x4 mMatrix = glm::mat4(1.0f);
+	// 顺序: 缩放->旋转->平移
+	mMatrix = glm::scale(mMatrix,scale);
+	mMatrix = glm::translate(mMatrix,position);
+
+	shader->setMatrix4x4("mvp",glm::value_ptr(mMatrix));
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture1->textureID);
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, texture2->textureID);
+
 	glBindVertexArray(VAO);
 
 	glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,0);

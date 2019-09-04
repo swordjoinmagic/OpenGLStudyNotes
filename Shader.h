@@ -7,6 +7,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include "Image.h"
 
 class Shader {
 public:
@@ -22,6 +23,12 @@ public:
 	void setBool(const std::string &name,bool value) const;
 	void setInt(const std::string &name,int value) const;
 	void setFloat(const std::string &name,float value) const;
+
+	// 设置纹理
+	void setTexture2D(const std::string &name,const SJM::Image image,int textureUnit);
+
+	// 设置矩阵(变换)
+	void setMatrix4x4(const std::string &name,const float* value);
 private:
 	std::string getSourceCode(const char* codePath);
 	void checkCreateShaderError(int shaderID);

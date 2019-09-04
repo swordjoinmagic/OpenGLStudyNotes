@@ -2,14 +2,19 @@
 #include "main.h"
 #include "Sample1_DrawTriangle.h"
 #include"Sample2_Texture.h"
+#include "Sample3_Camera.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
+void processMouseInput(GLFWwindow* window, double xpos, double ypos);
+void processMouseScroll(GLFWwindow* window, double xOffset, double yOffset);
 
 // 上次更新时间
 float lastUpdateTime;
 
-Sample2 sample;
+Sample3 sample;
+
+float deltaTime = 0;
 
 int main()
 {
@@ -45,8 +50,15 @@ int main()
 
 	// 设置回调函数,当窗体Size变化时调用的函数
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
+	
 	sample.init();
+
+	// 隐藏鼠标光标
+	//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	// 设置鼠标的回调函数
+	glfwSetCursorPosCallback(window,processMouseInput);
+	// 设置鼠标滚轮的回调函数
+	glfwSetScrollCallback(window,processMouseScroll);
 
 	lastUpdateTime = glfwGetTime();
 
@@ -57,7 +69,7 @@ int main()
 		processInput(window);
 
 		float nowTime = glfwGetTime();
-		float deltaTime = nowTime - lastUpdateTime;
+		deltaTime = nowTime - lastUpdateTime;
 		lastUpdateTime = nowTime;		
 
 		// 清理颜色缓冲
@@ -91,4 +103,14 @@ void processInput(GLFWwindow *window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+
+	sample.processInput(window,deltaTime);
+}
+
+void processMouseInput(GLFWwindow* window, double xpos, double ypos) {
+	sample.mouseCallBack(window,xpos,ypos);
+}
+
+void processMouseScroll(GLFWwindow* window, double xOffset, double yOffset) {
+	sample.scrollCallBack(window,xOffset,yOffset);
 }
