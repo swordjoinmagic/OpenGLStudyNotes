@@ -3,18 +3,27 @@
 #include "Sample1_DrawTriangle.h"
 #include"Sample2_Texture.h"
 #include "Sample3_Camera.h"
+#include "Sample4_Light.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 void processMouseInput(GLFWwindow* window, double xpos, double ypos);
 void processMouseScroll(GLFWwindow* window, double xOffset, double yOffset);
+void init();
 
 // 上次更新时间
 float lastUpdateTime;
 
-Sample3 sample;
+Sample4 sample;
 
 float deltaTime = 0;
+
+// 摄像机
+std::shared_ptr<Camera> camera;
+
+bool firstMouse = true;
+double lastX = 0;
+double lastY = 0;
 
 int main()
 {
@@ -51,7 +60,9 @@ int main()
 	// 设置回调函数,当窗体Size变化时调用的函数
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	
+	init();
 	sample.init();
+	sample.camera = camera;
 
 	// 隐藏鼠标光标
 	//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -94,6 +105,11 @@ int main()
 	return 0;
 }
 
+void init() {
+	// 初始化摄像机
+	camera = std::make_shared<Camera>(glm::vec3(0,0,3));
+}
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
 	glViewport(0, 0, width, height);
@@ -104,13 +120,37 @@ void processInput(GLFWwindow *window)
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 
-	sample.processInput(window,deltaTime);
+	if(glfwGetKey(window,GLFW_KEY_W) == GLFW_PRESS)
+		camera->ProcessKeyboard(FORWARD,deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		camera->ProcessKeyboard(BACKWARD, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		camera->ProcessKeyboard(LEFT, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		camera->ProcessKeyboard(RIGHT, deltaTime);
 }
 
 void processMouseInput(GLFWwindow* window, double xpos, double ypos) {
-	sample.mouseCallBack(window,xpos,ypos);
+	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
+		if (firstMouse) {
+			lastX = xpos;
+			lastY = ypos;
+			firstMouse = false;
+		}
+		float xOffset = xpos - lastX; 
+		float yOffset = lastY - ypos;
+
+		lastX = xpos;
+		lastY = ypos;
+
+		camera->ProcessMouseMovement(xOffset,yOffset);
+	}else{
+		lastX = xpos;
+		lastY = ypos;
+		firstMouse = false;
+	}
 }
 
 void processMouseScroll(GLFWwindow* window, double xOffset, double yOffset) {
-	sample.scrollCallBack(window,xOffset,yOffset);
+	camera->ProcessMouseScroll(yOffset);
 }

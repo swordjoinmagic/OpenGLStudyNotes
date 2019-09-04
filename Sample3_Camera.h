@@ -13,7 +13,6 @@ private:
 	unsigned int VAO;
 	unsigned int VBO;
 	std::shared_ptr<SJM::Image> image;
-	std::shared_ptr<SJM::Camera> camera;
 
 	int angle = 0;
 	float lastX = 400, lastY = 300;
@@ -24,12 +23,13 @@ private:
 	// 初始化顶点数据
 	void initVertex();
 public:
+	std::shared_ptr<SJM::Camera> camera;
 	void init();
 	void render();
 	void onDestory();
-	void processInput(GLFWwindow *window,float deltaTime);
-	void mouseCallBack(GLFWwindow* window, double xpos, double ypos);
-	void scrollCallBack(GLFWwindow* window,double xOffset,double yOffset);
+	//void processInput(GLFWwindow *window,float deltaTime);
+	//void mouseCallBack(GLFWwindow* window, double xpos, double ypos);
+	//void scrollCallBack(GLFWwindow* window,double xOffset,double yOffset);
 };
 
 #endif // !SAMPLER#

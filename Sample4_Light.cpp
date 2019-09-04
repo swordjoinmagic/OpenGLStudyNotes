@@ -1,13 +1,20 @@
-#include "main.h"
-#include "Sample3_Camera.h"
-#include <glm/gtc/type_ptr.hpp>
+#include "Sample4_Light.h"
 
-void Sample3::initVertex() {
-	// 生成VAO对象并绑定
+// 光源地址
+glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+
+void Sample4::init() {
+
+	// 初始化渲染光源的纯白色shader
+	whiteShader = std::make_shared<Shader>("Shader/Sample4 Light/whiteVertex.glsl", "Shader/Sample4 Light/whiteFrag.glsl");
+	// 初始化渲染物体的phong光照模型着色器
+	lightObjectShader = std::make_shared<Shader>("Shader/Sample4 Light/phongVertex.glsl", "Shader/Sample4 Light/phongFrag.glsl");
+
+	// 初始化VAO对象,然后绑定
 	glGenVertexArrays(1,&VAO);
 	glBindVertexArray(VAO);
 
-	// 创建顶点数据,并将它输入到缓冲(VBO)中
+	// 生成VBO对象,并将顶点数据输入到此缓冲中
 	float vertices[] = {
 	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
 	 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
@@ -54,58 +61,53 @@ void Sample3::initVertex() {
 	glGenBuffers(1,&VBO);
 	glBindBuffer(GL_ARRAY_BUFFER,VBO);
 	glBufferData(GL_ARRAY_BUFFER,sizeof(vertices),vertices,GL_STATIC_DRAW);
-	
+
+	// 设置并启用顶点属性
+
 	// pos
 	glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,5*sizeof(float),0);
-	// 设置并启用顶点数据
 	glEnableVertexAttribArray(0);
+
 	// uv
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glVertexAttribPointer(1,2,GL_FLOAT,GL_FALSE,5*sizeof(float),(void *)(3*sizeof(float)));
 	glEnableVertexAttribArray(1);
 }
 
-void Sample3::init() {
-	initVertex();
-	// 初始化shader
-	shader = std::make_shared<Shader>("Shader/Sample3/vertex.glsl", "Shader/Sample3/fragment.glsl");
-	// 初始化纹理
-	image = std::make_shared<SJM::Image>("Image/container.jpg");
-
-	shader->setTexture2D("MainTex",*image,0);
-
-}
-
-void Sample3::render() {
-
-	glUseProgram(shader->ID);
+void Sample4::render() {
 	// 绑定VAO
 	glBindVertexArray(VAO);
 
-	// 模型矩阵
-	glm::mat4x4 modelMatrix = glm::mat4x4(1.0f);
-	glm::vec3 yAxis(0,1,0);
-	modelMatrix = glm::rotate(modelMatrix,(float)glfwGetTime(),yAxis);
-	modelMatrix = glm::rotate(modelMatrix, (float)glfwGetTime(), glm::vec3(1,0,0));
-	// 获得观察矩阵
-	glm::mat4x4 viewMatrix = camera->getViewMatrix();
-	// 获得投影矩阵
-	glm::mat4x4 projMatrix = camera->getProjectionMatrix();
+	// 光源的模型矩阵
+	glm::mat4 lightModel(1.0f);
+	lightModel = glm::translate(lightModel,lightPos);
+	lightModel = glm::scale(lightModel,glm::vec3(0.2f));
 
-	// 设置纹理并激活纹理
-	shader->setTexture2D("MainTex", *image, 0);
-	// 设置mvp矩阵
-	shader->setMatrix4x4("m",glm::value_ptr(modelMatrix));
-	shader->setMatrix4x4("v",glm::value_ptr(viewMatrix));
-	shader->setMatrix4x4("p",glm::value_ptr(projMatrix));
+	// 获得观察矩阵和投影矩阵
+	glm::mat4 viewMatrix = camera->getViewMatrix();
+	glm::mat4 projMatrix = camera->getProjectionMatrix();
+	whiteShader->use();
+	whiteShader->setMatrix4x4("model",glm::value_ptr(lightModel));
+	whiteShader->setMatrix4x4("view", glm::value_ptr(viewMatrix));
+	whiteShader->setMatrix4x4("projection", glm::value_ptr(projMatrix));
 
 	// 开启深度测试
 	glEnable(GL_DEPTH_TEST);
 
-	// 绘制图形
-	glDrawArrays(GL_TRIANGLES,0,36);
+	// 绘制光源
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+	// 绘制物体
+	lightObjectShader->use();
+	glm::mat4 objectModel(1.0);
+	lightObjectShader->setMatrix4x4("model", glm::value_ptr(objectModel));
+	lightObjectShader->setMatrix4x4("view", glm::value_ptr(viewMatrix));
+	lightObjectShader->setMatrix4x4("projection", glm::value_ptr(projMatrix));
+	// 绘制物体
+	glDrawArrays(GL_TRIANGLES, 0, 36);
 }
 
-void Sample3::onDestory() {
-	glDeleteVertexArrays(1, &VAO);
+void Sample4::onDestory() {
 	glDeleteBuffers(1,&VBO);
+	glDeleteVertexArrays(1,&VAO);
 }
