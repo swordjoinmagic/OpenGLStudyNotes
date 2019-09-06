@@ -32,14 +32,14 @@ std::string Shader::getSourceCode(const char* codePath) {
 }
 
 // 检查顶点着色器的编译是否成功,如果失败,打印错误
-void Shader::checkCreateShaderError(int shaderID) {
+void Shader::checkCreateShaderError(int shaderID,const char* extraLog) {
 	int success;
 	char infoLog[512];
 	glGetShaderiv(shaderID, GL_COMPILE_STATUS, &success);
 	if (!success) {
 		// 获得错误信息
 		glGetShaderInfoLog(shaderID, 512, NULL, infoLog);
-		std::cout << "编译着色器出错\n" << infoLog << std::endl;
+		std::cout << extraLog <<"编译着色器出错\n" << infoLog << std::endl;
 	}
 }
 
@@ -69,14 +69,14 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath){
 	glShaderSource(vertex,1, &vShaderCode, NULL);
 	glCompileShader(vertex);
 	// 检查并打印编译错误
-	checkCreateShaderError(vertex);
+	checkCreateShaderError(vertex,"顶点着色器:");
 
 	// 创建片元着色器
 	fragment = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragment,1,&fShaderCode,NULL);
 	glCompileShader(fragment);
 	// 检查并打印编译错误
-	checkCreateShaderError(fragment);
+	checkCreateShaderError(fragment,"片元着色器:");
 
 	// 创建着色器程序(用于链接所有着色器)
 	this->ID = glCreateProgram();
@@ -115,4 +115,14 @@ void Shader::setTexture2D(const std::string &name,const Image image,int textureU
 void Shader::setMatrix4x4(const std::string &name, const float* value) {
 	unsigned int location = glGetUniformLocation(ID,name.c_str());
 	glUniformMatrix4fv(location,1,GL_FALSE,value);
+}
+
+void Shader::setFloat3(const std::string &name,const float x, const float y, const float z ) {
+	unsigned int location = glGetUniformLocation(ID, name.c_str());
+	glUniform3f(location,x,y,z);
+}
+
+void Shader::setFloat4(const std::string &name, const float x, const float y, const float z,const float w) {
+	unsigned int location = glGetUniformLocation(ID, name.c_str());
+	glUniform4f(location, x, y, z,w);
 }

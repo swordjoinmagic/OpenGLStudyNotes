@@ -29,9 +29,13 @@ public:
 
 	// 设置矩阵(变换)
 	void setMatrix4x4(const std::string &name,const float* value);
+
+	// 设置向量
+	void setFloat3(const std::string &name, const float x, const float y, const float z);
+	void setFloat4(const std::string &name, const float x, const float y, const float z,const float w);
 private:
 	std::string getSourceCode(const char* codePath);
-	void checkCreateShaderError(int shaderID);
+	void checkCreateShaderError(int shaderID, const char* extraLog);
 	void checkLinkShaderError();
 };
 

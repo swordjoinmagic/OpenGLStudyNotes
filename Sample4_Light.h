@@ -9,6 +9,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "Camera.h"
+#include "Image.h"
+
+using namespace SJM;
 
 class Sample4 {
 private:
@@ -16,6 +19,10 @@ private:
 	std::shared_ptr<Shader> whiteShader;
 	// 此Shader用于渲染被光照射的物体
 	std::shared_ptr<Shader> lightObjectShader;
+
+	// 被光照物体的主要纹理
+	std::shared_ptr<Image> image;
+	
 	unsigned int VAO;
 	unsigned int VBO;
 
