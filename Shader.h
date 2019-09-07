@@ -14,7 +14,7 @@ public:
 	// 着色器程序ID
 	unsigned int ID;
 	// 从文件路径中获得着色器源代码构造着色器
-	Shader(const GLchar* vertexPath,const GLchar* fragmentPath);
+	Shader(const GLchar* vertexPath,const GLchar* fragmentPath);	
 	Shader() {}
 	// 使用/激活程序
 	void use();
