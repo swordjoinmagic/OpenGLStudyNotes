@@ -1,2 +1,3 @@
-﻿  Sample4_Light.cpp
+﻿  Sample7_StencilTest.cpp
+d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample7_stenciltest.cpp(27): warning C4244: “参数”: 从“double”转换到“GLint”，可能丢失数据
   OpenGLStudyNotes.vcxproj -> D:\CPPInstance\LearnOpenGL\OpenGLStudyNotes\x64\Debug\OpenGLStudyNotes.exe

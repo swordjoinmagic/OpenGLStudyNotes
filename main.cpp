@@ -4,6 +4,10 @@
 #include"Sample2_Texture.h"
 #include "Sample3_Camera.h"
 #include "Sample4_Light.h"
+#include "Sample5_AssimpTest.h"
+#include "Sample6_Depth.h"
+#include "Sample7_StencilTest.h"
+
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -14,7 +18,7 @@ void init();
 // 上次更新时间
 float lastUpdateTime;
 
-Sample4 sample;
+Sample7 sample;
 
 float deltaTime = 0;
 
@@ -83,12 +87,15 @@ int main()
 		deltaTime = nowTime - lastUpdateTime;
 		lastUpdateTime = nowTime;		
 
-		// 清理颜色缓冲
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		// 设置默认颜色
+		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);		
+		// 清理颜色缓冲/深度缓冲/模板缓冲
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 		#pragma region 渲染指令
+		
 		sample.render();
+		
 		#pragma endregion
 
 		// 交换双缓冲
@@ -117,9 +124,12 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 void processInput(GLFWwindow *window)
 {
+	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+		camera->MovementSpeed += 6.0f*deltaTime;
+	else
+		camera->MovementSpeed = 2.5f;
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
-
 	if(glfwGetKey(window,GLFW_KEY_W) == GLFW_PRESS)
 		camera->ProcessKeyboard(FORWARD,deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
