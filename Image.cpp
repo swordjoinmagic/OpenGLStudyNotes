@@ -26,7 +26,7 @@ SJM::Image::Image(const char* path):samplingMode(GL_REPEAT),filterMode(GL_LINEAR
 		// 使用前面载入的图片数据生成一个纹理
 		glTexImage2D(
 			GL_TEXTURE_2D,	// 目标纹理缓冲类型
-			0,				// 多级减员纹理的级别
+			0,				// 多级渐远纹理的级别
 			GL_RGB,			// 告诉OpenGL把纹理存储为何种格式
 			width, height,	// 纹理的宽度和高度
 			0,				// 应该总是被设为0

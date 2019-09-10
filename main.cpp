@@ -7,6 +7,8 @@
 #include "Sample5_AssimpTest.h"
 #include "Sample6_Depth.h"
 #include "Sample7_StencilTest.h"
+#include "Sample8_AlphaBlend.h"
+#include "Sample9_PostEffect.h"
 
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -18,7 +20,7 @@ void init();
 // 上次更新时间
 float lastUpdateTime;
 
-Sample7 sample;
+Sample9 sample;
 
 float deltaTime = 0;
 
