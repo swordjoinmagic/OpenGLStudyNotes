@@ -1,6 +1,8 @@
 #include "iostream"
 #include "main.h"
 #include "Sample10_CubeMap.h"
+#include "Sample11_GeometryShader.h"
+#include "Sample12_Instances.h"
 
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -12,7 +14,7 @@ void init();
 // 上次更新时间
 float lastUpdateTime;
 
-Sample10 sample;
+Sample12 sample;
 
 float deltaTime = 0;
 

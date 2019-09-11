@@ -91,6 +91,56 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath){
 	glDeleteShader(fragment);
 }
 
+Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLchar* geometryPath) {
+	Shader(vertexPath,fragmentPath);
+
+	// 将string类型转换为C语言内置字符串(即char*)
+	std::string vertexCode = getSourceCode(vertexPath);
+	std::string fragmentCode = getSourceCode(fragmentPath);
+	std::string geometryCode = getSourceCode(geometryPath);
+
+	const char* gShaderCode = geometryCode.c_str();
+	const char* vShaderCode = vertexCode.c_str();
+	const char* fShaderCode = fragmentCode.c_str();
+
+	// 编译着色器
+	unsigned int vertex, fragment, geometry;
+	// 创建顶点着色器
+	vertex = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vertex, 1, &vShaderCode, NULL);
+	glCompileShader(vertex);
+	// 检查并打印编译错误
+	checkCreateShaderError(vertex, "顶点着色器:");
+
+	// 创建片元着色器
+	fragment = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fragment, 1, &fShaderCode, NULL);
+	glCompileShader(fragment);
+	// 检查并打印编译错误
+	checkCreateShaderError(fragment, "片元着色器:");
+
+	// 创建几何着色器
+	geometry = glCreateShader(GL_GEOMETRY_SHADER);
+	glShaderSource(geometry, 1, &gShaderCode, NULL);
+	glCompileShader(geometry);
+	// 检查并打印编译错误
+	checkCreateShaderError(geometry, "几何着色器:");
+
+	// 创建着色器程序(用于链接所有着色器)
+	this->ID = glCreateProgram();
+	glAttachShader(ID, vertex);
+	glAttachShader(ID, geometry);
+	glAttachShader(ID, fragment);
+	glLinkProgram(ID);
+	// 检查并打印链接错误
+	checkLinkShaderError();
+
+	// 删除着色器,因为已经链接进程序中了
+	glDeleteShader(vertex);
+	glDeleteShader(fragment);
+	glDeleteShader(geometry);
+}
+
 void Shader::use() {
 	glUseProgram(ID);
 }
@@ -120,6 +170,11 @@ void Shader::setCubeMap(const std::string &name, const SJM::CubeMap cubemap, int
 void Shader::setMatrix4x4(const std::string &name, const float* value) {
 	unsigned int location = glGetUniformLocation(ID,name.c_str());
 	glUniformMatrix4fv(location,1,GL_FALSE,value);
+}
+
+void Shader::setFloat2(const std::string &name, const float x, const float y) {
+	unsigned int location = glGetUniformLocation(ID, name.c_str());
+	glUniform2f(location, x, y);
 }
 
 void Shader::setFloat3(const std::string &name,const float x, const float y, const float z ) {

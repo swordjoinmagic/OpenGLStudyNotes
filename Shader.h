@@ -16,6 +16,8 @@ public:
 	unsigned int ID;
 	// 从文件路径中获得着色器源代码构造着色器
 	Shader(const GLchar* vertexPath,const GLchar* fragmentPath);	
+	// 使用顶点/几何/片元着色器构造着色器程序
+	Shader(const GLchar* vertexPath, const GLchar* fragmentPath,const GLchar* geometryPath);
 	Shader() {}
 	// 使用/激活程序
 	void use();
@@ -33,6 +35,7 @@ public:
 	void setMatrix4x4(const std::string &name,const float* value);
 
 	// 设置向量
+	void setFloat2(const std::string &name, const float x, const float y);
 	void setFloat3(const std::string &name, const float x, const float y, const float z);
 	void setFloat4(const std::string &name, const float x, const float y, const float z,const float w);
 private:
