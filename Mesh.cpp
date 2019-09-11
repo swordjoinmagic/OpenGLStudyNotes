@@ -47,9 +47,6 @@ void Mesh::setupMesh() {
 
 void Mesh::Draw(Shader shader) {
 
-	// 开启深度测试
-	//glEnable(GL_DEPTH_TEST);
-
 	// 绑定顶点数组对象
 	glBindVertexArray(VAO);
 	// 使用Shader

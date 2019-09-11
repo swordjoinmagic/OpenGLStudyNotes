@@ -1,14 +1,6 @@
 #include "iostream"
 #include "main.h"
-#include "Sample1_DrawTriangle.h"
-#include"Sample2_Texture.h"
-#include "Sample3_Camera.h"
-#include "Sample4_Light.h"
-#include "Sample5_AssimpTest.h"
-#include "Sample6_Depth.h"
-#include "Sample7_StencilTest.h"
-#include "Sample8_AlphaBlend.h"
-#include "Sample9_PostEffect.h"
+#include "Sample10_CubeMap.h"
 
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -20,7 +12,7 @@ void init();
 // 上次更新时间
 float lastUpdateTime;
 
-Sample9 sample;
+Sample10 sample;
 
 float deltaTime = 0;
 
@@ -92,7 +84,7 @@ int main()
 		// 设置默认颜色
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);		
 		// 清理颜色缓冲/深度缓冲/模板缓冲
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		#pragma region 渲染指令
 		

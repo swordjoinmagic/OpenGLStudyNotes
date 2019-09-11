@@ -45,7 +45,7 @@ void Sample9::init() {
 
 
 	// 初始化模型对象
-	obj = std::make_shared<Model>("mesh/suzanne.obj");
+	obj = std::make_shared<Model>("mesh/quad.obj");
 
 	// 初始化shader和纹理
 	objShader = std::make_shared<Shader>("Shader/Sample9 PostEffect/objVertex.glsl", "Shader/Sample9 PostEffect/objFrag.glsl");
@@ -75,9 +75,9 @@ void Sample9::init() {
 	glGenRenderbuffers(1, &rbo);
 	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 800, 600);
-
-	// 将渲染缓冲对象(深度缓冲)绑定至当前帧缓冲对象
-	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+	
+	// 将渲染缓冲对象绑定至当前帧缓冲对象
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER,rbo);
 
 	// 检查帧缓冲是否完整,如果不完整,打印错误信息
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER)!=GL_FRAMEBUFFER_COMPLETE){

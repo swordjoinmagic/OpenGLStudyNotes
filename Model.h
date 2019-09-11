@@ -20,9 +20,10 @@ using namespace SJM;
 class Model {
 public:
 	Model(const char* path);
+	Model(std::vector<Mesh> meshes) { this->meshes = meshes; }
 	Model() {};
 	void Draw(Shader shader);
-private:
+protected:
 	// 模型数据
 	std::vector<Mesh> meshes;
 	std::string directory;

@@ -5,5 +5,5 @@ in vec2 uv;
 uniform sampler2D screenTex;
 
 void main(){
-    fragColor = texture(screenTex,uv);
+    fragColor = vec4(vec3(1.0-texture(screenTex,uv)),1.0);
 }
