@@ -23,7 +23,6 @@ public:
 	Model(std::vector<Mesh> meshes) { this->meshes = meshes; }
 	Model() {};
 	void Draw(Shader shader);
-protected:
 	// 模型数据
 	std::vector<Mesh> meshes;
 	std::string directory;

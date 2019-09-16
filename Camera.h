@@ -21,7 +21,7 @@ namespace SJM {
 	const float SENSITIVITY = 0.1f;
 	const float ZOOM = 45.0f;
 	const float NEARDISTANCE = 0.1f;
-	const float FARDISTANCE = 100;
+	const float FARDISTANCE = 200;
 
 	class Camera {
 	public:

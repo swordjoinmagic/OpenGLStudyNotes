@@ -92,7 +92,6 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath){
 }
 
 Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLchar* geometryPath) {
-	Shader(vertexPath,fragmentPath);
 
 	// 将string类型转换为C语言内置字符串(即char*)
 	std::string vertexCode = getSourceCode(vertexPath);
@@ -112,19 +111,19 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLcha
 	// 检查并打印编译错误
 	checkCreateShaderError(vertex, "顶点着色器:");
 
-	// 创建片元着色器
-	fragment = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragment, 1, &fShaderCode, NULL);
-	glCompileShader(fragment);
-	// 检查并打印编译错误
-	checkCreateShaderError(fragment, "片元着色器:");
-
 	// 创建几何着色器
 	geometry = glCreateShader(GL_GEOMETRY_SHADER);
 	glShaderSource(geometry, 1, &gShaderCode, NULL);
 	glCompileShader(geometry);
 	// 检查并打印编译错误
 	checkCreateShaderError(geometry, "几何着色器:");
+
+	// 创建片元着色器
+	fragment = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fragment, 1, &fShaderCode, NULL);
+	glCompileShader(fragment);
+	// 检查并打印编译错误
+	checkCreateShaderError(fragment, "片元着色器:");
 
 	// 创建着色器程序(用于链接所有着色器)
 	this->ID = glCreateProgram();
@@ -147,13 +146,19 @@ void Shader::use() {
 
 // setter函数
 void Shader::setBool(const std::string &name,bool value) const {
-	glUniform1i(glGetUniformLocation(ID,name.c_str()),(int)value);
+	unsigned int location = glGetUniformLocation(ID, name.c_str());
+	if (location == -1) std::cout << "在目标着色器找不到变量:" << name << std::endl;
+	glUniform1i(location,(int)value);
 }
 void Shader::setInt(const std::string &name, int value) const {
-	glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
+	unsigned int location = glGetUniformLocation(ID, name.c_str());
+	if (location == -1) std::cout << "在目标着色器找不到变量:" << name << std::endl;
+	glUniform1i(location, value);
 }
-void Shader::setFloat(const std::string &name, float value) const {
-	glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
+void Shader::setFloat(const std::string &name, float value) const {	
+	unsigned int location = glGetUniformLocation(ID, name.c_str());
+	if (location == -1) std::cout << "在目标着色器找不到变量:" << name << std::endl;
+	glUniform1f(location, value);
 }
 void Shader::setTexture2D(const std::string &name,const Image image,int textureUnit) {
 	glActiveTexture(GL_TEXTURE0+textureUnit);
@@ -169,20 +174,24 @@ void Shader::setCubeMap(const std::string &name, const SJM::CubeMap cubemap, int
 
 void Shader::setMatrix4x4(const std::string &name, const float* value) {
 	unsigned int location = glGetUniformLocation(ID,name.c_str());
+	if (location == -1) std::cout << "在目标着色器找不到变量:" << name << std::endl;
 	glUniformMatrix4fv(location,1,GL_FALSE,value);
 }
 
 void Shader::setFloat2(const std::string &name, const float x, const float y) {
 	unsigned int location = glGetUniformLocation(ID, name.c_str());
+	if (location == -1) std::cout << "在目标着色器找不到变量:" << name << std::endl;
 	glUniform2f(location, x, y);
 }
 
 void Shader::setFloat3(const std::string &name,const float x, const float y, const float z ) {
 	unsigned int location = glGetUniformLocation(ID, name.c_str());
+	if (location == -1) std::cout << "在目标着色器找不到变量:" << name << std::endl;
 	glUniform3f(location,x,y,z);
 }
 
 void Shader::setFloat4(const std::string &name, const float x, const float y, const float z,const float w) {
 	unsigned int location = glGetUniformLocation(ID, name.c_str());
+	if (location == -1) std::cout << "在目标着色器找不到变量:" << name << std::endl;
 	glUniform4f(location, x, y, z,w);
 }

@@ -18,6 +18,7 @@ public:
 	Mesh(std::vector<Vertex> vertices,std::vector<unsigned int> indices);
 
 	void Draw(Shader shader);
+	int getVAO();
 private:
 	unsigned int VAO, VBO, EBO;
 	// 根据已有的顶点/顶点索引序列,建立Mesh网格

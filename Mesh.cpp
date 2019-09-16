@@ -57,3 +57,7 @@ void Mesh::Draw(Shader shader) {
 	// Çå³ý°ó¶¨
 	glBindVertexArray(0);
 }
+
+int Mesh::getVAO() {
+	return VAO;
+}
