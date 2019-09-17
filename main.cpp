@@ -5,7 +5,8 @@
 #include "Sample12_Instances.h"
 #include "Sample12_Instaces_Planet.h"
 #include "Sample13_Shadow.h"
-
+#include "Sample14_Normal.h"
+#include "Sample15_ParallaxMapping.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -16,7 +17,7 @@ void init();
 // 上次更新时间
 float lastUpdateTime;
 
-Sample13 sample;
+Sample15 sample;
 
 float deltaTime = 0;
 

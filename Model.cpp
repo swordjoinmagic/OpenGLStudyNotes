@@ -13,7 +13,7 @@ void Model::loadModel(std::string path) {
 	Assimp::Importer importer;
 
 	// 加载模型场景,并指定该模型由三角面构成(非三角面的情况会转换)并生成uv
-	const aiScene *scene = importer.ReadFile(path,aiProcess_Triangulate | aiProcess_FlipUVs);
+	const aiScene *scene = importer.ReadFile(path,aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
 	// 场景加载失败的情况
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) 
@@ -60,6 +60,7 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene) {
 		vector.x = mesh->mNormals[i].x;
 		vector.y = mesh->mNormals[i].y;
 		vector.z = mesh->mNormals[i].z;
+		vertex.normal = vector;
 
 		// uv,判断网格是否有纹理坐标
 		if (mesh->mTextureCoords[0]) {
@@ -72,6 +73,12 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene) {
 		else {
 			vertex.texcoords = glm::vec2(0.0f, 0.0f);
 		}
+
+		// 切线
+		vector.x = mesh->mTangents[i].x;
+		vector.y = mesh->mTangents[i].y;
+		vector.z = mesh->mTangents[i].z;
+		vertex.tangent = vector;
 
 		vertices.push_back(vertex);
 	}

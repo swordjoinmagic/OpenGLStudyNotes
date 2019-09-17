@@ -41,6 +41,10 @@ void Mesh::setupMesh() {
 	glVertexAttribPointer(2,2,GL_FLOAT,GL_FALSE,sizeof(Vertex),(void*)offsetof(Vertex,texcoords));
 	glEnableVertexAttribArray(2);
 
+	// tangent
+	glVertexAttribPointer(3,3,GL_FLOAT,GL_FALSE,sizeof(Vertex),(void*)offsetof(Vertex,tangent));
+	glEnableVertexAttribArray(3);
+
 	// Çå³ý°ó¶¨
 	glBindVertexArray(0);
 }
