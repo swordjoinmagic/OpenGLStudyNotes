@@ -8,6 +8,7 @@
 #include "Sample14_Normal.h"
 #include "Sample15_ParallaxMapping.h"
 #include "Sample16_Bloom.h"
+#include "Sample17_DeferredShading.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -18,7 +19,7 @@ void init();
 // 上次更新时间
 float lastUpdateTime;
 
-Sample16 sample;
+Sample17 sample;
 
 float deltaTime = 0;
 

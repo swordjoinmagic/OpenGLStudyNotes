@@ -1,2 +1,10 @@
-﻿  Sample16_Bloom.cpp
+﻿  Sample17_DeferredShading.cpp
+d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample17_deferredshading.cpp(21): warning C4305: “初始化”: 从“double”到“GLfloat”截断
+d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample17_deferredshading.cpp(22): warning C4305: “初始化”: 从“double”到“GLfloat”截断
+d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample17_deferredshading.cpp(68): warning C4244: “初始化”: 从“double”转换到“GLfloat”，可能丢失数据
+d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample17_deferredshading.cpp(69): warning C4244: “初始化”: 从“double”转换到“GLfloat”，可能丢失数据
+d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample17_deferredshading.cpp(70): warning C4244: “初始化”: 从“double”转换到“GLfloat”，可能丢失数据
+d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample17_deferredshading.cpp(72): warning C4244: “初始化”: 从“double”转换到“GLfloat”，可能丢失数据
+d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample17_deferredshading.cpp(73): warning C4244: “初始化”: 从“double”转换到“GLfloat”，可能丢失数据
+d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample17_deferredshading.cpp(74): warning C4244: “初始化”: 从“double”转换到“GLfloat”，可能丢失数据
   OpenGLStudyNotes.vcxproj -> D:\CPPInstance\LearnOpenGL\OpenGLStudyNotes\x64\Debug\OpenGLStudyNotes.exe
