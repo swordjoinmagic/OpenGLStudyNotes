@@ -1,5 +1,7 @@
-﻿  Sample18_SSAO.cpp
-d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample18_ssao.cpp(142): warning C4244: “初始化”: 从“double”转换到“GLfloat”，可能丢失数据
-d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample18_ssao.cpp(264): warning C4305: “初始化”: 从“double”到“GLfloat”截断
-d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample18_ssao.cpp(265): warning C4305: “初始化”: 从“double”到“GLfloat”截断
+﻿  Sample19_PBR.cpp
+d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample19_pbr.cpp(94): warning C4305: “初始化”: 从“double”到“float”截断
+d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample19_pbr.cpp(125): warning C4267: “=”: 从“size_t”转换到“unsigned int”，可能丢失数据
+d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample19_pbr.cpp(149): warning C4244: “参数”: 从“float”转换到“GLsizei”，可能丢失数据
+d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample19_pbr.cpp(151): warning C4244: “参数”: 从“float”转换到“GLsizei”，可能丢失数据
+d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample19_pbr.cpp(153): warning C4244: “参数”: 从“float”转换到“GLsizei”，可能丢失数据
   OpenGLStudyNotes.vcxproj -> D:\CPPInstance\LearnOpenGL\OpenGLStudyNotes\x64\Debug\OpenGLStudyNotes.exe

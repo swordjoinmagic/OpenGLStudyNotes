@@ -7,12 +7,13 @@
 #include "Camera.h"
 #include "Image.h"
 #include "Model.h"
+#include "Cube.h"
 
 using namespace SJM;
 
 class Sample7 {
 private:
-	std::shared_ptr<Model> model;
+	std::shared_ptr<Cube> model;
 	// 用来正常绘制箱子的Shader
 	std::shared_ptr<Shader> cubeShader;
 	// 用来绘制边框的Shader

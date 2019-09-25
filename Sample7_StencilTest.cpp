@@ -5,7 +5,7 @@
 
 const glm::vec3 objectPosition[] = {
 	glm::vec3(0,0,0),
-	glm::vec3(1,1,1)
+	//glm::vec3(1,1,1)
 };
 
 void Sample7::init() {
@@ -17,7 +17,7 @@ void Sample7::init() {
 	texture = std::make_shared<Image>("Image/container.jpg");
 
 	// 初始化模型
-	model = std::make_shared<Model>("mesh/suzanne.obj");
+	model = std::make_shared<Cube>();
 	
 }
 
@@ -51,7 +51,7 @@ void Sample7::render() {
 	// 并设置当当前片元的模板值不等于1的时候,不进行渲染
 	glStencilFunc(GL_NOTEQUAL,1,0xFF);
 	glStencilMask(0x00);
-	glDisable(GL_DEPTH_TEST);
+	//glDisable(GL_DEPTH_TEST);
 
 	// 将物体缩放一点,绘制它的轮廓线
 	outLineShader->use();
@@ -62,7 +62,7 @@ void Sample7::render() {
 	for (int i = 0; i < objectPosition->length(); i++) {
 		// 将物体放大一点
 		glm::mat4 mMatrix(1.0f);
-		mMatrix = glm::scale(mMatrix,glm::vec3(1,1,1)*1.05f);
+		mMatrix = glm::scale(mMatrix,glm::vec3(1,1,1)*1.1f);
 		mMatrix = glm::translate(mMatrix, objectPosition[i]);
 
 		outLineShader->setMatrix4x4("model",glm::value_ptr(mMatrix));

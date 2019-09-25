@@ -1,5 +1,6 @@
 #include "iostream"
 #include "main.h"
+#include "Sample7_StencilTest.h"
 #include "Sample10_CubeMap.h"
 #include "Sample11_GeometryShader.h"
 #include "Sample12_Instances.h"
@@ -10,6 +11,8 @@
 #include "Sample16_Bloom.h"
 #include "Sample17_DeferredShading.h"
 #include "Sample18_SSAO.h"
+#include "Sample5_AssimpTest.h"
+#include "Sample19_PBR.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -20,7 +23,7 @@ void init();
 // 上次更新时间
 float lastUpdateTime;
 
-Sample18 sample;
+Sample19 sample;
 
 float deltaTime = 0;
 
