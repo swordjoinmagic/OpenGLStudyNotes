@@ -29,7 +29,9 @@ public:
 
 	// 设置纹理
 	void setTexture2D(const std::string &name,const SJM::Image image,int textureUnit);
-	void setCubeMap(const std::string &name,const SJM::CubeMap,int textureUnit);
+	void setCubeMap(const std::string &name,const SJM::CubeMap cubeMap,int textureUnit);
+	void setCubeMap(const std::string &name, unsigned int textureID, int textureUnit);
+
 
 	// 设置矩阵(变换)
 	void setMatrix4x4(const std::string &name,const float* value);

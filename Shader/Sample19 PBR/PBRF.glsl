@@ -16,6 +16,13 @@ uniform float roughness;
 // 环境光遮蔽
 uniform float ao;
 
+//===========================
+// 间接光部分
+// 漫反射辐照度贴图
+uniform samplerCube irradianceMap;
+
+
+
 // 四个点光源位置及颜色
 uniform vec3 lightPos[4];
 uniform vec3 lightColor[4];
@@ -113,14 +120,21 @@ void main(){
         KD *= 1.0 - metallic;
 
         //==========================
-        // 计算漫反射BRDF
+        // 计算直接光照的漫反射BRDF
 
         float NdotL = max(dot(normal,worldLightDir),0.0);
         // 其中可以认为漫反射的BRDF=c/π,radiance为L函数(即入射光辐照度)
         L0 += (KD * albedo / PI + specular) * radiance * NdotL;
     }
-
-    vec3 ambient = vec3(0.03) * albedo * ao;
+    vec3 F0 = vec3(0.04);
+    F0 = mix(F0,albedo,metallic);
+    vec3 kS = fresnelSchlick(max(dot(normal,worldViewDir),0.0),F0);
+    vec3 kD = 1.0 - kS;
+    kD *= 1.0 - metallic;
+    vec3 irradiance = texture(irradianceMap,normal).rgb;
+    vec3 diffuse = irradiance * albedo;
+    vec3 ambient = (kD * diffuse) * ao;
+    // ambient = vec3(0.03) * albedo * ao;
     vec3 color = ambient + L0;
     // 伽马矫正
     color = color / (color + vec3(1.0));

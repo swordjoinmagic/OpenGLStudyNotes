@@ -171,6 +171,11 @@ void Shader::setCubeMap(const std::string &name, const SJM::CubeMap cubemap, int
 	glBindTexture(GL_TEXTURE_CUBE_MAP,cubemap.textureID);
 	setInt(name,textureUnit);
 }
+void Shader::setCubeMap(const std::string &name, unsigned int textureID, int textureUnit) {
+	glActiveTexture(textureUnit);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+	setInt(name, textureUnit);
+}
 
 void Shader::setMatrix4x4(const std::string &name, const float* value) {
 	unsigned int location = glGetUniformLocation(ID,name.c_str());

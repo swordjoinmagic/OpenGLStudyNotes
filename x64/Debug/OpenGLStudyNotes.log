@@ -1,7 +1,7 @@
 ﻿  Sample19_PBR.cpp
-d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample19_pbr.cpp(94): warning C4305: “初始化”: 从“double”到“float”截断
-d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample19_pbr.cpp(125): warning C4267: “=”: 从“size_t”转换到“unsigned int”，可能丢失数据
-d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample19_pbr.cpp(149): warning C4244: “参数”: 从“float”转换到“GLsizei”，可能丢失数据
-d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample19_pbr.cpp(151): warning C4244: “参数”: 从“float”转换到“GLsizei”，可能丢失数据
-d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample19_pbr.cpp(153): warning C4244: “参数”: 从“float”转换到“GLsizei”，可能丢失数据
+d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample19_pbr.cpp(131): warning C4305: “初始化”: 从“double”到“float”截断
+d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample19_pbr.cpp(162): warning C4267: “=”: 从“size_t”转换到“unsigned int”，可能丢失数据
+d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample19_pbr.cpp(186): warning C4244: “参数”: 从“float”转换到“GLsizei”，可能丢失数据
+d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample19_pbr.cpp(188): warning C4244: “参数”: 从“float”转换到“GLsizei”，可能丢失数据
+d:\cppinstance\learnopengl\openglstudynotes\openglstudynotes\sample19_pbr.cpp(190): warning C4244: “参数”: 从“float”转换到“GLsizei”，可能丢失数据
   OpenGLStudyNotes.vcxproj -> D:\CPPInstance\LearnOpenGL\OpenGLStudyNotes\x64\Debug\OpenGLStudyNotes.exe
